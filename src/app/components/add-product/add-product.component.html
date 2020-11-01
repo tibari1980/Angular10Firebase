@@ -1,0 +1,122 @@
+<h1>Ajouter un produit</h1>
+<div class="row">
+    <div class="offset-6 col-9">
+        <form #FormProduct="ngForm" novalidate (ngSubmit)="onSubmitProd()">
+            <div class="form-group">
+                <label for="nom">Nom</label>
+                <input type="text" name="nom"
+                     required
+                     pattern="^[a-zA-ZàéèÄË¨-]+"
+                     minlength="4"
+                     (change)="log(nom)"
+                     id="nom" class="form-control"
+                    placeholder="saisir le nom" 
+                    #nom="ngModel"
+                    [(ngModel)]="productModule.nom">
+            </div>
+            <div class="alert alert-danger" *ngIf="!nom.valid && nom.touched">
+                <div *ngIf="nom.errors.required">Ce champs est obligatoire</div>
+                <div *ngIf="nom.errors.pattern">Ce champs ne peut pas contenir les caratères spéciaux</div>
+                <div *ngIf="nom.errors.minlength">Ce champs doit contenir au moin {{nom.errors.minlength.requiredLength}} vous avez saisi {{nom.errors.minlength.actualLength}} </div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" 
+                      name="description" id="description" 
+                      required
+                      class="form-control"
+                      minlength="5"
+                      pattern="^[a-zA-Z0-9àéè|-à]+"
+                      placeholder="saisir la description" 
+                      #description="ngModel" 
+                      [(ngModel)]="productModule.description">
+            </div>
+            <div class="alert alert-danger" *ngIf="!description.valid && description.touched">
+                 <div *ngIf="description.errors.required">Ce champs est obligatoire</div>
+                 <div *ngIf="description.errors.pattern">Ce champs ne respecte pas le pattern et ne doit pas contenir les caracères spéciaux</div>
+                 <div *ngIf="description.errors.minlength"> Ce champs doit contenir au moit {{description.errors.minlength.requiredLength}} | vous avez saisi {{description.errors.minlength.actualLength}}</div>
+            </div>
+            <div class="form-group">
+                <label for="dataAjouter">Date ajout</label>
+                <input type="date" name="dataAjouter" id="dataAjouter" class="form-control"
+                    placeholder="selectionner la date" 
+                    #dataAjouter="ngModel" [(ngModel)]="productModule.dataAjouter"
+                    required>
+                    <div class="alert alert-danger" *ngIf="!dataAjouter.valid && dataAjouter.touched">
+                        <div *ngIf="dataAjouter.errors.required">Ce champs et obligatorie</div>
+                        
+                    </div>
+            </div>
+            <div class="form-group">
+                <label for="prixAchat">Prix Achat</label>
+                <input type="number" required
+                    pattern="^[1-9]\d{1,3}(\.\d{1,2})?$" 
+                    name="prixAchat" id="prixAchat" class="form-control"
+                    placeholder="prix achat" #prixAchat="ngModel" [(ngModel)]="productModule.prixAchat">
+            </div>
+            <div class="alert alert-danger" *ngIf="!prixAchat.valid && prixAchat.touched">
+              <div *ngIf="prixAchat.errors.required">Ce champs est obligatoire</div>
+              <div *ngIf="prixAchat.errors.pattern">Ce champs doit contenir que les chiffres!!</div>
+            </div>
+            <div class="form-group">
+                <label for="quantiteStock">Quantite En stock</label>
+                <input type="number" 
+                    required name="quantiteStock" id="quantiteStock" class="form-control"
+                    placeholder="quantite en stock..." 
+                    #quantiteStock="ngModel"
+                    pattern="^[1-9]\d{1,3}(\.\d{1,2})?$"
+                    [(ngModel)]="productModule.quantiteStock">
+                    <div class="alert alert-danger" *ngIf="!quantiteStock.valid && quantiteStock.touched">
+                        <div *ngIf="quantiteStock.errors.required">Ce champs est obligatoire</div>
+                        <div *ngIf="quantiteStock.errors.pattern">Ce champs doit contenir que les chiffres </div>
+
+                    </div>
+            </div>
+            <div class="form-group">
+                <label for="prixVente">Prix Vente</label>
+                <input type="number" required name="prixVente" id="prixVente" class="form-control"
+                    placeholder="prix vente" 
+                    pattern="^[1-9]\d{1,3}(\.\d{1,2})?$"
+                    #prixVente="ngModel" [(ngModel)]="productModule.prixVente">
+                    <div class="alert alert-danger" *ngIf="!prixVente.valid && prixVente.touched">
+                          <div *ngIf="prixVente.errors.required">Ce champs est obligatoire</div>
+                          <div *ngIf="prixVente.errors.pattern">Ce champs doit contenir que les chiffres !!!!</div>
+                    </div>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="isDisponible" #isDisponible="ngModel"
+                        [(ngModel)]="productModule.isDisponible" id="isDisponible">
+                    Disponible
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="isPromotion" #isPromotion="ngModel"
+                        [(ngModel)]="productModule.isPromotion" id="isPromotion">
+                    En promotion
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="isSelected" #isSelected="ngModel"
+                        [(ngModel)]="productModule.isSelected" id="isSelected">
+                    selectionné
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="photo">Photo</label>
+                <input type="file" class="form-control-file" name="image" id="photo" #image="ngModel"
+                    [(ngModel)]="productModule.image" placeholder="selectionner la photo">
+            </div>
+            <div class="form-group">
+                <button 
+                [disabled]="FormProduct.form.invalid"
+                type="submit" name="save" id="save"
+                    class="btn btn-dark btn-lg">
+                    <i class="fa fa-database" style="font-size: 30px;color: white;"></i>
+                    Save</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="container">
+    <h1>Liste Produits</h1>
+    <table class="table table-dark" *ngIf="products">
+        <thead>
+            <th>
+                <a [routerLink]="['/add-product']">
+                <i class="fa fa-plus" style="font-size:20;color:white" aria-hidden="true"></i>
+            </a>
+            </th>
+            <th>ACTION</th>
+            <th>NOM</th>
+            <th>DESCRIPTION</th>
+            <th>Data Création</th>
+            <th>PRIX ACHAT</th>
+            <th>PRIX VENTE</th>
+            <th>QUANTITE STOCK</th>
+            <th>EN PRIMOTION</th>
+            <th>DISPONIBLE</th>
+            <th>Selectionné</th>
+            <th>PHOTO   </th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of products | async">
+                <td>
+                    <a (click)="OnUpdateProduct(product.$key['key'])">
+                        <i class="fa fa-edit" style="font-size:30px;color:white"></i>
+                    </a>
+                </td>
+                <!-- affichage $key-->
+                <td></td>
+                <td>{{product.nom}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.dataAjouter}}</td>
+                <td>{{product.prixAchat}}</td>
+                <td>{{product.prixVente}}</td>
+                <td>{{product.quantiteStock}}</td>
+                <td>{{product.isPromotion}}</td>
+                <td>{{product.isDisponible}}</td>
+                <td>{{product.isSelected}}</td>
+                <td>
+                    <img  class="rounded"
+                    [src]="'assets/images/products.jpg'"alt="image"
+                    style="height: 50px;width: 40px;">
+                </td>
+                <a (click)="OnDeleteProduct(product.$key['key'])">
+                    <i class="fa fa-trash" style="font-size:30px;color:white"></i>
+                </a>
+            </tr>
+        </tbody>
+    </table>
+</div>
